@@ -90,7 +90,7 @@ jobs:
   deployprod:
     needs: deployuat
     runs-on: ubuntu-latest
-    environment: prod
+    environment: prd
     steps:    
     - name: Checkout this repo
       uses: actions/checkout@v4
@@ -101,7 +101,7 @@ jobs:
         key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
         restore-keys: |
           ${{ runner.os }}-maven-
-    - name: Deploy to prod
+    - name: Deploy to prd
       run: |
         mvn deploy --settings .maven/settings.xml -DskipMunitTests -DmuleDeploy \
         -Danypoint.username="${{ secrets.USER }}" \
