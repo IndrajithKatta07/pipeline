@@ -24,6 +24,11 @@ jobs:
           java-version: 17
       # - name: Build JAR
       #   run: mvn clean package -DmuleDeploy
+      - name: Download shared settings.xml
+        run: |
+          git clone --depth 1 https://github.com/Indrajith045/maven-settings-repo.git
+          mkdir -p .maven
+          cp maven-settings-repo/.maven/settings.xml .maven/settings.xml
       - name: Publish to Exchange
         run: |
           mvn deploy --settings .maven/settings.xml -DskipMunitTests \
@@ -46,6 +51,11 @@ jobs:
         key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
         restore-keys: |
           ${{ runner.os }}-maven-       
+    - name: Download shared settings.xml
+        run: |
+          git clone --depth 1 https://github.com/Indrajith045/maven-settings-repo.git
+          mkdir -p .maven
+          cp maven-settings-repo/.maven/settings.xml .maven/settings.xml
     - name: Deploy to dev
       run: |
         mvn deploy --settings .maven/settings.xml -DskipMunitTests -DmuleDeploy \
